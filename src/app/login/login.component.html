@@ -1,0 +1,43 @@
+<div class="login">
+  <div class="login-screen">
+    <div class="app-title">
+      <img class="logo" src="https://gaius.com.mx/img/logo.png" alt="" />
+    </div>
+    <div class="login-form">
+      <form
+        novalidate
+        [formGroup]="loginUsuario"
+        (ngSubmit)="login(loginUsuario.value)"
+        class="forms-sample"
+      >
+        <div class="control-group">
+          <input
+            type="email"
+            class="form-control"
+            formControlName="email"
+            autocomplete="email"
+            placeholder="cris@gaius.com.mx"
+          />
+          <label class="login-field-icon fui-user" for="login-name"></label>
+        </div>
+
+        <div class="control-group">
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+            autocomplete="new-password"
+            placeholder="*********"
+          />
+          <label class="login-field-icon fui-lock" for="login-pass"></label>
+        </div>
+
+        <input
+          type="submit"
+          class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0"
+          value="Iniciar session"
+        />
+      </form>
+    </div>
+  </div>
+</div>

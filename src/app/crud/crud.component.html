@@ -1,0 +1,74 @@
+<button class="btn btn-primary" (click)="logout()">
+  Cerrar sesión <i class="bi bi-person-down"></i>
+</button>
+
+<div class="table-responsive">
+  <table class="table table-hover table-bordered table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Price</th>
+        <th scope="col">Discount</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Brand</th>
+        <th scope="col">Category</th>
+        <th scope="col">Thumbnail</th>
+        <th scope="col">Catálogo</th>
+        <th scope="col">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of products">
+        <td>{{ producto.id }}</td>
+        <td>{{ producto.title }}</td>
+        <td>{{ producto.description }}</td>
+        <td>${{ producto.price }}</td>
+        <td>{{ producto.rating }}%</td>
+        <td>{{ producto.stock }}</td>
+        <td>{{ producto.brand }}</td>
+        <td>{{ producto.category }}</td>
+        <td><img class="prodc-img" [src]="producto.thumbnail" alt="" /></td>
+        <td>
+          <div *ngFor="let imageUrl of producto.images; let i = index">
+            <img
+              class="catalogo"
+              [src]="imageUrl"
+              alt="Imagen"
+              [hidden]="currentSlide !== i"
+            />
+          </div>
+          <div class="uno">
+            <button class="btn btn-primary btn-sm" (click)="prevSlide()">
+              <i class="bi bi-arrow-left-circle-fill"></i>
+            </button>
+
+            <button class="btn btn-primary btn-sm" (click)="nextSlide()">
+              <i class="bi bi-arrow-right-circle-fill"></i>
+            </button>
+          </div>
+        </td>
+
+        <td style="display: flex">
+          <a
+            class="btn btn-warning"
+            (click)="actualizarProducto(producto)"
+            data-toggle="tooltip"
+            data-placement="left"
+            title="Update"
+            ><i class="bi bi-pencil-fill"></i>
+          </a>
+          <a
+            class="btn btn-danger"
+            (click)="deleteProducto(producto.id)"
+            data-toggle="tooltip"
+            data-placement="left"
+            title="Update"
+            ><i class="bi bi-trash3-fill"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
