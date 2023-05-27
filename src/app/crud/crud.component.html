@@ -1,37 +1,113 @@
-<button class="btn btn-primary" (click)="logout()">
-  Cerrar sesión <i class="bi bi-person-down"></i>
-</button>
+<header class="p-3 mb-3 border-bottom">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-lg-end">
+      <form class="d-flex">
+        <input
+          class="form-control me-2 btn-outline-success"
+          type="search"
+          name="searchTerm"
+          [(ngModel)]="searchTerm"
+          placeholder="Buscar productos"
+          (keyup)="searchProducts()"
+          aria-label="Search"
+        />
+      </form>
+      <a
+        href="/"
+        class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none"
+      >
+        <svg
+          class="bi me-2"
+          width="40"
+          height="32"
+          role="img"
+          aria-label="Bootstrap"
+        >
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+      </a>
+      <div class="dropdown text-end" *ngIf="user">
+        <a
+          href="#"
+          class="d-block link-dark text-decoration-none dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            class="logo-user"
+            [src]="
+              photoURL
+                ? photoURL
+                : 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png'
+            "
+            alt="User Photo"
+          />
+        </a>
 
+        <ul class="dropdown-menu text-small">
+          <li>
+            <p>{{ email }}</p>
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <button class="dropdown-item" (click)="logout()">
+              Cerrar sesión <i class="bi bi-person-down"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+<div
+  class="alert alert-warning"
+  role="alert"
+  *ngIf="searchPerformed && searchResults.length === 0"
+>
+  No se encontraron resultados.
+</div>
+
+<!-- Muestra los resultados de la búsqueda -->
 <div class="table-responsive">
   <table class="table table-hover table-bordered table-sm">
     <thead>
       <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Title</th>
-        <th scope="col">Description</th>
-        <th scope="col">Price</th>
-        <th scope="col">Discount</th>
-        <th scope="col">Stock</th>
-        <th scope="col">Brand</th>
-        <th scope="col">Category</th>
-        <th scope="col">Thumbnail</th>
-        <th scope="col">Catálogo</th>
-        <th scope="col">Opciones</th>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Rating</th>
+        <th>Stock</th>
+        <th>Marca</th>
+        <th>Categoría</th>
+        <th>Thumbnail</th>
+        <th>Imágenes</th>
+        <th>
+          <button
+            class="btn btn-outline-success"
+            (click)="openSm(create)"
+            data-toggle="tooltip"
+            data-placement="left"
+            title="create"
+          >
+            <i class="bi bi-plus-circle"></i>
+          </button>
+        </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let producto of products">
-        <td>{{ producto.id }}</td>
-        <td>{{ producto.title }}</td>
-        <td>{{ producto.description }}</td>
-        <td>${{ producto.price }}</td>
-        <td>{{ producto.rating }}%</td>
-        <td>{{ producto.stock }}</td>
-        <td>{{ producto.brand }}</td>
-        <td>{{ producto.category }}</td>
-        <td><img class="prodc-img" [src]="producto.thumbnail" alt="" /></td>
+      <tr *ngFor="let product of searchResults">
+        <td>{{ product.id }}</td>
+        <td>{{ product.title }}</td>
+        <td>{{ product.description }}</td>
+        <td>${{ product.price }}</td>
+        <td>{{ product.rating }}%</td>
+        <td>{{ product.stock }}</td>
+        <td>{{ product.brand }}</td>
+        <td>{{ product.category }}</td>
+        <td><img class="prodc-img" [src]="product.thumbnail" alt="" /></td>
         <td>
-          <div *ngFor="let imageUrl of producto.images; let i = index">
+          <div *ngFor="let imageUrl of product.images; let i = index">
             <img
               class="catalogo"
               [src]="imageUrl"
@@ -43,21 +119,20 @@
             <button class="btn btn-primary btn-sm" (click)="prevSlide()">
               <i class="bi bi-arrow-left-circle-fill"></i>
             </button>
-
             <button class="btn btn-primary btn-sm" (click)="nextSlide()">
               <i class="bi bi-arrow-right-circle-fill"></i>
             </button>
           </div>
         </td>
-
-        <td style="display: flex">
+        <td>
           <a
             class="btn btn-warning"
-            (click)="actualizarProducto(producto)"
+            (click)="actualizarproduct(producto, contenido)"
             data-toggle="tooltip"
             data-placement="left"
             title="Update"
-            ><i class="bi bi-pencil-fill"></i>
+          >
+            <i class="bi bi-pencil-fill"></i>
           </a>
           <a
             class="btn btn-danger"
@@ -65,10 +140,223 @@
             data-toggle="tooltip"
             data-placement="left"
             title="Update"
-            ><i class="bi bi-trash3-fill"></i>
+          >
+            <i class="bi bi-trash3-fill"></i>
           </a>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+
+<ng-template #contenido let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Editar Producto</h4>
+    <button
+      type="button"
+      class="btn-close"
+      data-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    ></button>
+  </div>
+  <form
+    [formGroup]="productosFrom"
+    (ngSubmit)="actualizarProducto(productosFrom.value)"
+    novalidate
+  >
+    <div class="modal-body">
+      <div class="form-group row g-2">
+        <div class="col-md-6">
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            formControlName="title"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="description" class="form-label">Descripción</label>
+          <input
+            type="text"
+            class="form-control"
+            id="description"
+            formControlName="description"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="price" class="form-label">Price</label>
+          <input
+            type="number"
+            class="form-control"
+            id="price"
+            formControlName="price"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="discountPercentage" class="form-label"
+            >DiscountPercentage</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="discountPercentage"
+            formControlName="discountPercentage"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="stock" class="form-label">Stock</label>
+          <input
+            type="number"
+            class="form-control"
+            id="stock"
+            formControlName="stock"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="brand" class="form-label">Brand</label>
+          <input
+            type="text"
+            class="form-control"
+            id="brand"
+            formControlName="brand"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="category" class="form-label">Category</label>
+          <input
+            type="text"
+            class="form-control"
+            id="category"
+            formControlName="category"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-dismiss="modal"
+        (click)="modal.close()"
+      >
+        Cerrar
+      </button>
+      <input
+        class="btn btn-primary"
+        color="primary"
+        type="submit"
+        value="Guardar"
+      />
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #create let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Crear Producto</h4>
+    <button
+      type="button"
+      class="btn-close"
+      data-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    ></button>
+  </div>
+  <form
+    [formGroup]="productosFrom"
+    (ngSubmit)="createProducto(productosFrom.value)"
+    novalidate
+  >
+    <div class="modal-body">
+      <div class="form-group row g-2">
+        <div class="col-md-6">
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            formControlName="title"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="description" class="form-label">Descripción</label>
+          <input
+            type="text"
+            class="form-control"
+            id="description"
+            formControlName="description"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="price" class="form-label">Price</label>
+          <input
+            type="number"
+            class="form-control"
+            id="price"
+            formControlName="price"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="discountPercentage" class="form-label"
+            >DiscountPercentage</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="discountPercentage"
+            formControlName="discountPercentage"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="stock" class="form-label">Stock</label>
+          <input
+            type="number"
+            class="form-control"
+            id="stock"
+            formControlName="stock"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="brand" class="form-label">Brand</label>
+          <input
+            type="text"
+            class="form-control"
+            id="brand"
+            formControlName="brand"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="category" class="form-label">Category</label>
+          <input
+            type="text"
+            class="form-control"
+            id="category"
+            formControlName="category"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-dismiss="modal"
+        (click)="modal.close()"
+      >
+        Cerrar
+      </button>
+      <input
+        class="btn btn-primary"
+        color="primary"
+        type="submit"
+        value="Guardar"
+      />
+    </div>
+
+    <input type="hidden" class="form-control" id="id" formControlName="id" />
+  </form>
+</ng-template>

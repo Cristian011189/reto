@@ -16,11 +16,17 @@ export class CrudService {
   createProduct(form: any): Observable<any> {
     return this.http.post<any>(`${this.url}/add`, form);
   }
-  updateProduct(form: any): Observable<any> {
-    return this.http.put<any>(`${this.url}/${form.id}`, form);
+  updateProduct(form: any, id: any): Observable<any> {
+    console.log(JSON.stringify(id));
+    return this.http.put<any>(`${this.url}/${id}`, form);
   }
   deleteProduct(form: any): Observable<any> {
     console.log(`${this.url}/${form}`);
     return this.http.delete<any>(`${this.url}/${form}`);
+  }
+  searchProducts(searchTerm: string): Observable<any[]> {
+    return this.http.get<any[]>(
+      `https://dummyapi.io/data/api/products?search=${searchTerm}`
+    );
   }
 }
