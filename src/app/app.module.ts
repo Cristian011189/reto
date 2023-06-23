@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 // Firebase
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
+import { TareaComponent } from './tarea/tarea.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { environment } from 'src/environments/environment';
     CreateComponentComponent,
     EditComponentComponent,
     ViewComponentComponent,
+    TareaComponent,
   ],
   imports: [
     BrowserModule,

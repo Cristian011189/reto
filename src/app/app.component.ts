@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
@@ -15,7 +15,7 @@ export class AppComponent {
     this.afAuth.onAuthStateChanged((user) => {
       if (user) {
         // Usuario logeado
-        this.router.navigate(['/crud']); // Redirige a la página de CRUD
+        // this.router.navigate(['/crud']); // Redirige a la página de CRUD
       } else {
         // Usuario no logeado
         this.router.navigate(['/login']); // Redirige a la página de inicio de sesión

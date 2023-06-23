@@ -1,0 +1,117 @@
+<header class="p-3 mb-3 border-bottom">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-lg-end">
+      <a
+        href="/"
+        class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none"
+      >
+        <svg
+          class="bi me-2"
+          width="40"
+          height="32"
+          role="img"
+          aria-label="Bootstrap"
+        >
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+      </a>
+      <div class="dropdown text-end" *ngIf="user">
+        <a
+          href="#"
+          class="d-block link-dark text-decoration-none dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            class="logo-user"
+            [src]="
+              photoURL
+                ? photoURL
+                : 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png'
+            "
+            alt="User Photo"
+          />
+        </a>
+
+        <ul class="dropdown-menu text-small">
+          <li>
+            <p>{{ email }}</p>
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <button class="dropdown-item" (click)="logout()">
+              Cerrar sesión <i class="bi bi-person-down"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="activites">
+  <div class="card">
+    <h4>Titulo (Obligatorio)</h4>
+    <h4>Completada o no completada (Obligatorio)</h4>
+    <h4>Fecha (Opcional)</h4>
+    <h4>Comentarios (Opcional)</h4>
+    <h4>Descripción (Opcional)</h4>
+    <h4>Tags (Opcional)</h4>
+  </div>
+  <div class="card">
+    <h4>Titulo (Obligatorio)</h4>
+    <h4>Completada o no completada (Obligatorio)</h4>
+    <h4>Fecha (Opcional)</h4>
+    <h4>Comentarios (Opcional)</h4>
+    <h4>Descripción (Opcional)</h4>
+    <h4>Tags (Opcional)</h4>
+  </div>
+  <div class="card">
+    <h4>Titulo (Obligatorio)</h4>
+    <h4>Completada o no completada (Obligatorio)</h4>
+    <h4>Fecha (Opcional)</h4>
+    <h4>Comentarios (Opcional)</h4>
+    <h4>Descripción (Opcional)</h4>
+    <h4>Tags (Opcional)</h4>
+  </div>
+  <div class="card">
+    <h4>Titulo (Obligatorio)</h4>
+    <h4>Completada o no completada (Obligatorio)</h4>
+    <h4>Fecha (Opcional)</h4>
+    <h4>Comentarios (Opcional)</h4>
+    <h4>Descripción (Opcional)</h4>
+    <h4>Tags (Opcional)</h4>
+  </div>
+  <div class="card">
+    <h4>Titulo (Obligatorio)</h4>
+    <h4>Completada o no completada (Obligatorio)</h4>
+    <h4>Fecha (Opcional)</h4>
+    <h4>Comentarios (Opcional)</h4>
+    <h4>Descripción (Opcional)</h4>
+    <h4>Tags (Opcional)</h4>
+  </div>
+  <div class="card">
+    <h4>Titulo (Obligatorio)</h4>
+    <h4>Completada o no completada (Obligatorio)</h4>
+    <h4>Fecha (Opcional)</h4>
+    <h4>Comentarios (Opcional)</h4>
+    <h4>Descripción (Opcional)</h4>
+    <h4>Tags (Opcional)</h4>
+  </div>
+  <div class="card">
+    <h4>Titulo (Obligatorio)</h4>
+    <h4>Completada o no completada (Obligatorio)</h4>
+    <h4>Fecha (Opcional)</h4>
+    <h4>Comentarios (Opcional)</h4>
+    <h4>Descripción (Opcional)</h4>
+    <h4>Tags (Opcional)</h4>
+  </div>
+  <div class="card">
+    <h4>Titulo (Obligatorio)</h4>
+    <h4>Completada o no completada (Obligatorio)</h4>
+    <h4>Fecha (Opcional)</h4>
+    <h4>Comentarios (Opcional)</h4>
+    <h4>Descripción (Opcional)</h4>
+    <h4>Tags (Opcional)</h4>
+  </div>
+</section>

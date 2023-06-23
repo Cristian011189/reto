@@ -1,0 +1,28 @@
+.activites {
+  padding: 10vh;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+}
+.card {
+  width: 300px;
+  padding: 15px 10px;
+  margin: 20px 0px;
+  border-radius: 18px;
+  background-color: rgb(30, 146, 228);
+  box-shadow: 0px 0px 30px 0px rgba(17, 87, 148, 0.651);
+  border: 1px solid rgba(30, 146, 228, 0.18);
+}
+.card:hover {
+  transition: all 2s ease-in-out;
+  background-color: rgba(30, 146, 228, 0.437);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transform: translate(0px, -10px);
+  -webkit-transform: translate(0, -10px);
+  -o-transform: translate(0, -10px);
+  -moz-transform: translate(0, -10px);
+  -webkit-box-shadow: 0px 0px 30px 0px rgb(17, 145, 205);
+  -moz-box-shadow: 0px 0px 30px 0px rgb(17, 145, 205);
+  box-shadow: 0px 0px 30px 0px rgba(17, 87, 148, 0.604);
+}
